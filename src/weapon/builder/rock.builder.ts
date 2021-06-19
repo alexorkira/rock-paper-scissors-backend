@@ -9,7 +9,7 @@ class RockBuilder extends WeaponBuilder {
 
   build(): Weapon {
     super
-      .setStrengths([WeaponEnum.SCISSORS]) //<-- Add other strength here
+      .setStrengths([WeaponEnum.SCISSORS]) //<-- Add other strengths here
       .setWeaknesses([WeaponEnum.PAPER]); //<-- Add other weaknesses here
 
     return super.build();

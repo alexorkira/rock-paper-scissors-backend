@@ -9,7 +9,7 @@ class PaperBuilder extends WeaponBuilder {
 
   build(): Weapon {
     super
-      .setStrengths([WeaponEnum.ROCK]) //<-- Add other strength here
+      .setStrengths([WeaponEnum.ROCK]) //<-- Add other strengths here
       .setWeaknesses([WeaponEnum.SCISSORS]); //<-- Add other weaknesses here
 
     return super.build();

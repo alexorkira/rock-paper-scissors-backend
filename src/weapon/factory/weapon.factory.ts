@@ -12,6 +12,7 @@ export class WeaponFactory {
         return new PaperBuilder().build();
       case WeaponEnum.SCISSORS:
         return new ScissorsBuilder().build();
+      // Add a switch-case and the building of a new Weapon here
       default:
         throw new HttpException("Weapon type not found", HttpStatus.NOT_FOUND);
     }
