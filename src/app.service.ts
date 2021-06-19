@@ -51,18 +51,22 @@ export class AppService {
       return { playerMove, computerMove };
     }
 
-    if (this.weapons[playerMove].weaknesses.find((weaponName) => weaponName == computerMove)) {
+    if (
+      this.weapons[playerMove].strengths.find(
+        (weaponName: WeaponEnum) => weaponName == computerMove
+      )
+    ) {
       return {
         playerMove,
         computerMove,
-        winner: "computer",
+        winner: "you!!",
       };
     }
 
     return {
       playerMove,
       computerMove,
-      winner: "you!!",
+      winner: "computer",
     };
   }
 }
