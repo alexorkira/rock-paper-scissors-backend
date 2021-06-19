@@ -1,2 +1,2 @@
-export { default as GameModeInputDto } from "./game-mode.input.dto";
-export { default as PlayerMoveDto } from "./player-move.input.dto";
+export { default as GameModeDto } from "./game-mode.input.dto";
+export { default as PlayerChoiceDto } from "./player-choice.input.dto";

@@ -1,6 +1,6 @@
-import WeaponEnum from "./weapon.enum";
-import Weapon from "./weapon";
-import { PaperBuilder, RockBuilder, ScissorsBuilder } from "./builder";
+import WeaponEnum from "../weapon.enum";
+import Weapon from "../weapon";
+import { PaperBuilder, RockBuilder, ScissorsBuilder } from "../builder";
 import { HttpException, HttpStatus } from "@nestjs/common";
 
 export class WeaponFactory {
@@ -18,16 +18,4 @@ export class WeaponFactory {
   }
 }
 
-export interface WeaponPack {
-  [key: string]: Weapon;
-}
-
-export class WeaponPackFactory {
-  public static createWeaponPack(): WeaponPack {
-    const weaponPack = {};
-    Object.values(WeaponEnum).forEach((weaponName) => {
-      weaponPack[weaponName] = WeaponFactory.createWeapon(<WeaponEnum>weaponName);
-    });
-    return weaponPack;
-  }
-}
+export default WeaponFactory;

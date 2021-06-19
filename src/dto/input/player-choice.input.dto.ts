@@ -1,9 +1,9 @@
 import { IsNotEmpty } from "class-validator";
 import WeaponEnum from "../../weapon/weapon.enum";
 
-class PlayerMoveInputDto {
+class PlayerChoiceInputDto {
   @IsNotEmpty()
-  playerMove: WeaponEnum;
+  playerChoice: WeaponEnum;
 }
 
-export default PlayerMoveInputDto;
+export default PlayerChoiceInputDto;

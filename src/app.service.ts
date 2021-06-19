@@ -1,24 +1,27 @@
 import { Injectable } from "@nestjs/common";
 import WeaponEnum from "./weapon/weapon.enum";
-import { WeaponPack, WeaponPackFactory } from "./weapon/weapon.factory";
-import GameModeInputDto from "./dto/input/game-mode.input.dto";
-import MatchResultDto from "./dto/output/match-result.dto";
-import PlayerMoveDto from "./dto/input/player-move.input.dto";
+import { WeaponPack } from "./weapon/weapon-pack.interface";
+import { WeaponPackFactory } from "./weapon/factory";
+import * as Input from "./dto/input";
+import * as Output from "./dto/output";
 
 @Injectable()
 export class AppService {
-  private readonly weapons: WeaponPack;
+  private readonly weaponPack: WeaponPack;
   private mode: string;
 
   constructor() {
-    this.weapons = WeaponPackFactory.createWeaponPack();
+    this.weaponPack = WeaponPackFactory.createWeaponPack();
   }
 
   /**
-   * Return a random choice between the all Weapons set up
+   * Return a random Weapon name from all Weapons available
+   * @return WeaponEnum
    */
   getRandomWeapon(): WeaponEnum {
-    const allWeapons = Object.values(this.weapons);
+    // Extract all the Weapons from the the Weapon Pack
+    const allWeapons = Object.values(this.weaponPack);
+    // A random Weapon from all those available is drawn
     const randomWeapon = allWeapons[Math.floor(Math.random() * allWeapons.length)];
     return randomWeapon.name;
   }
@@ -27,7 +30,7 @@ export class AppService {
    * Set the mode of the match. P1 vs COM || COM vs COM
    * @param dto: input dto containing the game mode
    */
-  setGameMode(dto: GameModeInputDto): string {
+  setGameMode(dto: Input.GameModeDto): string {
     this.mode = dto.mode;
 
     // // If the user select Player VS Computer
@@ -39,33 +42,40 @@ export class AppService {
   }
 
   /**
-   * Discover who is the winner of the match
-   * @param dto: input dto containing the player move
+   * Discover who is the winner of this match
+   * @param dto PlayerChoiceInputDto: input dto containing the player move
+   * @return MatchResultDto
    */
-  discoverTheWinner(dto: PlayerMoveDto): MatchResultDto {
-    const { playerMove } = dto;
+  discoverTheWinner(dto: Input.PlayerChoiceDto): Output.MatchResultDto {
+    const { playerChoice } = dto;
 
-    const computerMove = this.getRandomWeapon();
+    const computerChoice = this.getRandomWeapon();
 
-    if (playerMove === computerMove) {
-      return { playerMove, computerMove };
+    // Player and Computer chosen the same Weapon.
+    // No winner for this time.  It's a draw!
+    if (playerChoice === computerChoice) {
+      return { playerChoice, computerChoice };
     }
 
+    // If the Computer choice is contained in the strengths list
+    // of the Weapon chosen by the Player... Congrats the Player wins!
     if (
-      this.weapons[playerMove].strengths.find(
-        (weaponName: WeaponEnum) => weaponName == computerMove
+      this.weaponPack[playerChoice].strengths.find(
+        (strengthWeapon: WeaponEnum) => strengthWeapon == computerChoice
       )
     ) {
       return {
-        playerMove,
-        computerMove,
+        playerChoice,
+        computerChoice,
         winner: "you!!",
       };
     }
 
+    // The Computer weapon is stronger than one chosen by the Player...
+    // Sorry, the Player were unlucky. Play again!!
     return {
-      playerMove,
-      computerMove,
+      playerChoice,
+      computerChoice,
       winner: "computer",
     };
   }
