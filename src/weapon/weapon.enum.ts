@@ -1,7 +1,7 @@
 enum WeaponEnum {
-  ROCK,
-  PAPER,
-  SCISSORS,
+  ROCK = "rock",
+  PAPER = "paper",
+  SCISSORS = "scissors",
 }
 
 export default WeaponEnum;
