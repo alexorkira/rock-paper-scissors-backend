@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import WeaponEnum from "./weapon/weapon.enum";
 import { WeaponPack } from "./weapon/weapon-pack.interface";
 import { WeaponPackFactory } from "./weapon/factory";
@@ -49,10 +49,15 @@ export class AppService {
   discoverTheWinner(dto: Input.PlayerChoiceDto): Output.MatchResultDto {
     const { playerChoice } = dto;
 
+    // Validation of the Player choice. It must be a WeaponEnum value
+    if (!Object.values(WeaponEnum).includes(playerChoice)) {
+      throw new HttpException("Not recognized Weapon", HttpStatus.BAD_REQUEST);
+    }
+
     const computerChoice = this.getRandomWeapon();
 
-    // Player and Computer chosen the same Weapon.
-    // No winner for this time.  It's a draw!
+    // Player and Computer have chosen the same Weapon.
+    // No winner for this match. It's a draw!
     if (playerChoice === computerChoice) {
       return { playerChoice, computerChoice };
     }

@@ -13,7 +13,7 @@ export class WeaponFactory {
       case WeaponEnum.SCISSORS:
         return new ScissorsBuilder().build();
       default:
-        throw new HttpException("Unknown type of weapon", HttpStatus.BAD_REQUEST);
+        throw new HttpException("Weapon type not found", HttpStatus.NOT_FOUND);
     }
   }
 }
