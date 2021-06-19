@@ -1,24 +1,21 @@
 import { Injectable } from "@nestjs/common";
 import WeaponEnum from "./weapon/weapon.enum";
-import Weapon from "./weapon/weapon";
-import { WeaponFactory, WeaponSuite, WeaponSuiteFactory } from "./weapon/weapon.factory";
+import { WeaponPack, WeaponPackFactory } from "./weapon/weapon.factory";
 import GameModeInputDto from "./dto/input/game-mode.input.dto";
 import MatchResultDto from "./dto/output/match-result.dto";
 import PlayerMoveDto from "./dto/input/player-move.input.dto";
 
 @Injectable()
 export class AppService {
-  private readonly weapons: WeaponSuite;
+  private readonly weapons: WeaponPack;
   private mode: string;
 
-  private computerChoice;
-
   constructor() {
-    this.weapons = WeaponSuiteFactory.createWeaponSuite();
+    this.weapons = WeaponPackFactory.createWeaponPack();
   }
 
   /**
-   * Returns a random choice between the all Weapons set up
+   * Return a random choice between the all Weapons set up
    */
   getRandomWeapon(): WeaponEnum {
     const allWeapons = Object.values(this.weapons);

@@ -14,10 +14,6 @@ class WeaponBuilder {
     this.weaknesses = [];
   }
 
-  get Name() {
-    return this.name;
-  }
-
   setStrengths(strength: WeaponEnum[]): WeaponBuilder {
     this.strengths = strength;
     return this;
@@ -30,6 +26,10 @@ class WeaponBuilder {
 
   build(): Weapon {
     return new Weapon(this);
+  }
+
+  get Name() {
+    return this.name;
   }
 
   get Strengths() {

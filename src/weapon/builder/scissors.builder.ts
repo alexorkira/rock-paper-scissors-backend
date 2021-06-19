@@ -1,21 +1,18 @@
 import WeaponEnum from "../weapon.enum";
 import WeaponBuilder from "./weapon.builder";
+import Weapon from "../weapon";
 
 class ScissorsBuilder extends WeaponBuilder {
   constructor() {
     super(WeaponEnum.SCISSORS);
   }
 
-  setStrengths(): ScissorsBuilder {
-    // Add other strength here
-    super.setStrengths([WeaponEnum.PAPER]);
-    return this;
-  }
+  build(): Weapon {
+    super
+      .setStrengths([WeaponEnum.PAPER]) //<-- Add other strength here
+      .setWeaknesses([WeaponEnum.ROCK]); //<-- Add other weaknesses here
 
-  setWeaknesses(): ScissorsBuilder {
-    // Add other weaknesses here
-    super.setWeaknesses([WeaponEnum.ROCK]);
-    return this;
+    return super.build();
   }
 }
 
