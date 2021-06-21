@@ -3,10 +3,10 @@ import WeaponEnum from "../../weapon/weapon.enum";
 
 class MatchResultDto {
   @IsNotEmpty()
-  playerChoice: WeaponEnum;
+  playerOneWeapon: WeaponEnum;
 
   @IsNotEmpty()
-  computerChoice: WeaponEnum;
+  playerTwoWeapon: WeaponEnum;
 
   @IsOptional()
   winner?: string;

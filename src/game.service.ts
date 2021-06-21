@@ -6,7 +6,7 @@ import * as Input from "./dto/input";
 import * as Output from "./dto/output";
 
 @Injectable()
-export class AppService {
+export class GameService {
   private readonly weaponPack: WeaponPack;
   private mode: string;
 
@@ -42,11 +42,29 @@ export class AppService {
   }
 
   /**
-   * Discover who is the winner of this match
+   * Computers fighting each other
+   * @return MatchResultDto
+   */
+  computersFighting(): Output.MatchResultDto {
+    // The fight between the Computer begin
+    const computerOneWeapon = this.getRandomWeapon();
+    const computerTwoWeapon = this.getRandomWeapon();
+
+    const winner = this.discoverTheWinner(computerOneWeapon, computerTwoWeapon);
+
+    return {
+      playerOneWeapon: computerOneWeapon,
+      playerTwoWeapon: computerTwoWeapon,
+      winner,
+    };
+  }
+
+  /**
+   * Player against Computer
    * @param dto PlayerChoiceInputDto: input dto containing the player move
    * @return MatchResultDto
    */
-  discoverTheWinner(dto: Input.PlayerChoiceDto): Output.MatchResultDto {
+  readyPlayerOne(dto: Input.PlayerChoiceDto): Output.MatchResultDto {
     const { playerChoice } = dto;
 
     // Validation of the Player choice. It must be a WeaponEnum value
@@ -56,32 +74,34 @@ export class AppService {
 
     const computerChoice = this.getRandomWeapon();
 
-    // Player and Computer have chosen the same Weapon.
+    const winner = this.discoverTheWinner(playerChoice, computerChoice);
+
+    return {
+      playerOneWeapon: playerChoice,
+      playerTwoWeapon: computerChoice,
+      winner,
+    };
+  }
+
+  discoverTheWinner(playerOneWeapon: WeaponEnum, playerTwoWeapon: WeaponEnum): string {
+    // Player One and Player Two have chosen the same Weapon.
     // No winner for this match. It's a draw!
-    if (playerChoice === computerChoice) {
-      return { playerChoice, computerChoice };
+    if (playerOneWeapon === playerTwoWeapon) {
+      return "";
     }
 
-    // If the Computer choice is contained in the strengths list
-    // of the Weapon chosen by the Player... Congrats the Player wins!
+    // If the Player Two choice is contained in the strengths list
+    // of the Weapon chosen by Player One... Congrats the Player One wins!
     if (
-      this.weaponPack[playerChoice].strengths.find(
-        (strengthWeapon: WeaponEnum) => strengthWeapon == computerChoice
+      this.weaponPack[playerOneWeapon].strengths.find(
+        (strengthWeapon: WeaponEnum) => strengthWeapon == playerTwoWeapon
       )
     ) {
-      return {
-        playerChoice,
-        computerChoice,
-        winner: "you!!",
-      };
+      return "playerOne";
     }
 
-    // The Computer weapon is stronger than one chosen by the Player...
-    // Sorry, the Player were unlucky. Play again!!
-    return {
-      playerChoice,
-      computerChoice,
-      winner: "computer",
-    };
+    // The Player Two weapon is stronger than one chosen by the Player One...
+    // Sorry, the Player One were unlucky. Play again!!
+    return "playerTwo";
   }
 }
