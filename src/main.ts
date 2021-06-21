@@ -12,6 +12,10 @@ async function bootstrap() {
     })
   );
 
+  app.enableCors({
+    origin: `${process.env.HOST}:${process.env.FRONTEND_PORT}`,
+  });
+
   await app.listen(process.env.BACKEND_PORT);
 }
 bootstrap();
