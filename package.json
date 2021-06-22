@@ -60,7 +60,6 @@
       "json",
       "ts"
     ],
-    "collectCoverage": true,
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {

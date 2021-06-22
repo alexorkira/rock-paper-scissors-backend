@@ -75,12 +75,8 @@ export class GameService {
     }
 
     // If the PlayerTwo choice is contained in the strengths list
-    // of the Weapon chosen by Player One... Congrats the Player One wins!
-    if (
-      this.weaponPack[playerOneWeapon].strengths.find(
-        (strengthWeapon: WeaponEnum) => strengthWeapon == playerTwoWeapon
-      )
-    ) {
+    // of the Weapon chosen by PlayerOne... Congrats the PlayerOne wins!
+    if (this.weaponPack[playerOneWeapon].strengths.includes(playerTwoWeapon)) {
       return "playerOne";
     }
 
