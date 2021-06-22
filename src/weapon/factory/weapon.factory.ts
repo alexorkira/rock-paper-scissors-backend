@@ -14,7 +14,7 @@ export class WeaponFactory {
         return new ScissorsBuilder().build();
       // Add a switch-case and the building of a new Weapon here
       default:
-        throw new HttpException("Weapon type not found", HttpStatus.NOT_FOUND);
+        throw new HttpException(`Not found the Weapon builder for ${type}`, HttpStatus.NOT_FOUND);
     }
   }
 }
