@@ -1,12 +1,12 @@
 import { IsNotEmpty, IsOptional } from "class-validator";
-import WeaponEnum from "../../weapon/weapon.enum";
+import PlayerDto from "./player.dto";
 
 class MatchResultDto {
   @IsNotEmpty()
-  playerOneWeapon: WeaponEnum;
+  playerOne: PlayerDto;
 
   @IsNotEmpty()
-  playerTwoWeapon: WeaponEnum;
+  playerTwo: PlayerDto;
 
   @IsOptional()
   winner?: string;

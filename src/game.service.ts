@@ -27,21 +27,6 @@ export class GameService {
   }
 
   /**
-   * Set the mode of the match. P1 vs COM || COM vs COM
-   * @param dto: input dto containing the game mode
-   */
-  setGameMode(dto: Input.GameModeDto): string {
-    this.mode = dto.mode;
-
-    // // If the user select Player VS Computer
-    // if (this.mode === "1player") {
-    //   this.computerChoice = this.getRandomWeapon();
-    // }
-
-    return "ok";
-  }
-
-  /**
    * Computers fighting each other
    * @return MatchResultDto
    */
@@ -53,8 +38,8 @@ export class GameService {
     const winner = this.discoverTheWinner(computerOneWeapon, computerTwoWeapon);
 
     return {
-      playerOneWeapon: computerOneWeapon,
-      playerTwoWeapon: computerTwoWeapon,
+      playerOne: { name: "COM2", weapon: computerOneWeapon },
+      playerTwo: { name: "COM1", weapon: computerTwoWeapon },
       winner,
     };
   }
@@ -77,8 +62,8 @@ export class GameService {
     const winner = this.discoverTheWinner(playerChoice, computerChoice);
 
     return {
-      playerOneWeapon: playerChoice,
-      playerTwoWeapon: computerChoice,
+      playerOne: { name: "P1", weapon: playerChoice },
+      playerTwo: { name: "COM", weapon: computerChoice },
       winner,
     };
   }

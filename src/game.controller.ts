@@ -7,13 +7,8 @@ import { MatchResultDto } from "./dto/output";
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Post("set-game-mode")
-  setGameMode(@Body() dto: Input.GameModeDto): string {
-    return this.gameService.setGameMode(dto);
-  }
-
   @Post("player-vs-com")
-  theWinnerIs(@Body() dto: Input.PlayerChoiceDto): MatchResultDto {
+  readyPlayerOne(@Body() dto: Input.PlayerChoiceDto): MatchResultDto {
     return this.gameService.readyPlayerOne(dto);
   }
 
