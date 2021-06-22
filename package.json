@@ -60,15 +60,30 @@
       "json",
       "ts"
     ],
+    "collectCoverage": true,
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "dist",
+      ".module.ts",
+      "main.ts"
+    ],
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coverageThreshold": {
+      "global": {
+        "statements": 90,
+        "lines": 90,
+        "functions": 100,
+        "branches": 100
+      }
+    }
   }
 }
