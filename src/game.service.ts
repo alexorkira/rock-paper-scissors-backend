@@ -8,7 +8,6 @@ import * as Output from "./dto/output";
 @Injectable()
 export class GameService {
   private readonly weaponPack: WeaponPack;
-  private mode: string;
 
   constructor() {
     this.weaponPack = WeaponPackFactory.createWeaponPack();
@@ -54,7 +53,7 @@ export class GameService {
 
     // Validation of the Player choice. It must be a WeaponEnum value
     if (!Object.values(WeaponEnum).includes(playerChoice)) {
-      throw new HttpException("Not recognized Weapon", HttpStatus.BAD_REQUEST);
+      throw new HttpException(`Not recognized Weapon ${playerChoice}`, HttpStatus.BAD_REQUEST);
     }
 
     const computerChoice = this.getRandomWeapon();
@@ -69,13 +68,13 @@ export class GameService {
   }
 
   discoverTheWinner(playerOneWeapon: WeaponEnum, playerTwoWeapon: WeaponEnum): string {
-    // Player One and Player Two have chosen the same Weapon.
+    // PlayerOne and PlayerTwo have chosen the same Weapon.
     // No winner for this match. It's a draw!
     if (playerOneWeapon === playerTwoWeapon) {
       return "";
     }
 
-    // If the Player Two choice is contained in the strengths list
+    // If the PlayerTwo choice is contained in the strengths list
     // of the Weapon chosen by Player One... Congrats the Player One wins!
     if (
       this.weaponPack[playerOneWeapon].strengths.find(
@@ -85,8 +84,8 @@ export class GameService {
       return "playerOne";
     }
 
-    // The Player Two weapon is stronger than one chosen by the Player One...
-    // Sorry, the Player One were unlucky. Play again!!
+    // The PlayerTwo weapon is stronger than one chosen by the PlayerOne...
+    // Sorry, the PlayerOne has been unlucky. Play again!!
     return "playerTwo";
   }
 }
